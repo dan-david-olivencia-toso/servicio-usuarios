@@ -12,25 +12,49 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/api/cliente")
 @Api(value = "ClienteRest", description = "Permite gestionar los clientes de la empresa")
 public class ClienteRest {
-    
+
     private static final List<Cliente> listaClientes = new ArrayList<>();
     private static Integer ID_GEN = 1;
 
     @GetMapping(path = "/{id}")
     @ApiOperation(value = "Busca un cliente por id")
-    public ResponseEntity<Cliente> clientePorId(@PathVariable Integer id){
+    public ResponseEntity<Cliente> clientePorId(@PathVariable Integer id) {
 
-        Optional<Cliente> c =  listaClientes
+        Optional<Cliente> c = listaClientes
                 .stream()
                 .filter(unCli -> unCli.getId().equals(id))
                 .findFirst();
         return ResponseEntity.of(c);
+    }
+
+    @GetMapping(path = "/{cuit}")
+    @ApiOperation(value = "Busca un cliente por CUIT")
+    public ResponseEntity<Cliente> clientePorCuit(@PathVariable String cuit){
+
+        Optional<Cliente> c =  listaClientes
+                .stream()
+                .filter(unCli -> unCli.getCuit().equals(cuit))
+                .findFirst();
+        return ResponseEntity.of(c);
+    }
+
+    @GetMapping(path = "/{razonSocial}")
+    @ApiOperation(value = "Busca clientes por razon social")
+    public ResponseEntity<List<Cliente>> clientePorRazonSocial(@PathVariable String razonSocial){
+
+        List<Cliente> listaC =  listaClientes
+                .stream()
+                .filter(unCli -> unCli.getCuit().equals(razonSocial))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(listaC);
     }
 
     @GetMapping
