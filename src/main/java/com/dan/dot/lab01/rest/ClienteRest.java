@@ -34,7 +34,7 @@ public class ClienteRest {
         return ResponseEntity.of(c);
     }
 
-    @GetMapping(path = "/{cuit}")
+    @GetMapping(path = "/cuit/{cuit}")
     @ApiOperation(value = "Busca un cliente por CUIT")
     public ResponseEntity<Cliente> clientePorCuit(@PathVariable String cuit){
 
@@ -45,13 +45,13 @@ public class ClienteRest {
         return ResponseEntity.of(c);
     }
 
-    @GetMapping(path = "/{razonSocial}")
+    @GetMapping(path = "/razonsocial/{razonSocial}")
     @ApiOperation(value = "Busca clientes por razon social")
     public ResponseEntity<List<Cliente>> clientePorRazonSocial(@PathVariable String razonSocial){
 
         List<Cliente> listaC =  listaClientes
                 .stream()
-                .filter(unCli -> unCli.getCuit().equals(razonSocial))
+                .filter(unCli -> unCli.getRazonSocial().equals(razonSocial))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(listaC);
