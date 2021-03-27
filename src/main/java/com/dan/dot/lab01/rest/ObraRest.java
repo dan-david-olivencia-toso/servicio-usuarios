@@ -79,7 +79,7 @@ public class ObraRest {
         OptionalInt indexOpt =   IntStream.range(0, listaObras.size())
                 .filter(i -> listaObras.get(i).getId().equals(id))
                 .findFirst();
-
+/
         if(indexOpt.isPresent()){
             listaObras.set(indexOpt.getAsInt(), nuevo);
             return ResponseEntity.ok(nuevo);
