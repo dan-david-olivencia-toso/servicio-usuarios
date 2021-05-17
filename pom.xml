@@ -11,11 +11,8 @@
 	<groupId>com.dan.dot</groupId>
 	<artifactId>lab01</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lab01</name>
-	<description>Proyecto de Laboratorio 01 - Microservicio Pedidos - DAN 2021 - UTN FRSF</description>
-	<properties>
-		<java.version>11</java.version>
-	</properties>
+	<name>usuarios</name>
+	<description>Microservicio de Usuarios - Desarrollo de Aplicaciones en la Nube 2021 - UTN FRSF</description>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -73,13 +70,15 @@
 			</plugin>
 		</plugins>
 	</build>
+  
 	<reporting>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.14.0</version>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>3.0.0</version>
 			</plugin>
 		</plugins>
 	</reporting>
+
 </project>
