@@ -31,7 +31,7 @@ pipeline {
         stage('Analisis estatico') {
             steps {
                 bat "mvnw site"
-                bat "mvnw checkstyle:checkstyle pmd:pmd pmd:cpd findbugs:findbugs spotbugs:spotbugs"
+                bat "mvnw checkstyle:checkstyle pmd:pmd pmd:cpd com.github.spotbugs:spotbugs-maven-plugin:4.2.0:spotbugs"
             }
         }
     }
@@ -42,11 +42,11 @@ pipeline {
         always{
             archiveArtifacts artifacts: '**/target/site/**', fingerprint: true
             publishHTML([allowMissing: false,
-                        alwaysLinkToLastBuild: true,
-                        keepAll: true,
-                        reportDir: 'target/site',
-                        reportFiles: 'index.html',
-                        reportName: 'Site'
+                         alwaysLinkToLastBuild: true,
+                         keepAll: true,
+                         reportDir: 'target/site',
+                         reportFiles: 'index.html',
+                         reportName: 'Site'
             ])
             junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
             jacoco ( execPattern: 'target/jacoco.exec')
