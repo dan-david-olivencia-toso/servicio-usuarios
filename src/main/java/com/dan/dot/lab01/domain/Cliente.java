@@ -1,5 +1,10 @@
 package com.dan.dot.lab01.domain;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Cliente {
@@ -67,6 +72,30 @@ public class Cliente {
         this.obras = obras;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public Date getFechaBaja() {
+        return fechaBaja;
+    }
+
+    public void setFechaBaja(Date fechaBaja) {
+        this.fechaBaja = fechaBaja;
+    }
+
     private Integer id;
     private String razonSocial;
     private String cuit;
@@ -74,5 +103,8 @@ public class Cliente {
     private Double maxCuentaCorriente;
     private Boolean habilitadoOnline;
     private Usuario user;
+    private String password;
+    private Date fechaBaja;
     private List<Obra> obras;
+    private List<Pedido> pedidos;
 }
