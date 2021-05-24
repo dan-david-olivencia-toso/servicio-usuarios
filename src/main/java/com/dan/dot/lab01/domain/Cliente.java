@@ -72,14 +72,6 @@ public class Cliente {
         this.obras = obras;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public List<Pedido> getPedidos() {
         return pedidos;
     }
@@ -103,7 +95,6 @@ public class Cliente {
     private Double maxCuentaCorriente;
     private Boolean habilitadoOnline;
     private Usuario user;
-    private String password;
     private Date fechaBaja;
     private List<Obra> obras;
     private List<Pedido> pedidos;

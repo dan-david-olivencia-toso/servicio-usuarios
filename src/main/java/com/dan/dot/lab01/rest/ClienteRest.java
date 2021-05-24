@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -112,18 +113,24 @@ public class ClienteRest {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<?> borrar(@RequestBody Cliente c) {
-        Cliente dadoDeBaja = null;
+    public ResponseEntity<?> borrar(@PathVariable Integer id){
         try {
-            dadoDeBaja = this.clienteService.bajaCliente(c);
-        } catch (ClienteService.RecursoNoEncontradoException e1) {
+            this.clienteService.bajaCliente(id);
+        } catch (ClienteService.RecursoNoEncontradoException | ClienteService.OperacionNoPermitidaException e1) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e1.getMessage());
-        } catch (ClienteService.OperacionNoPermitidaException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        this.actualizar(dadoDeBaja);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping(path = "alta/{id}")
+    public ResponseEntity<?> altaCliente(@PathVariable Integer id){
+        try {
+            this.clienteService.altaCliente(id);
+        } catch (ClienteService.RecursoNoEncontradoException e1) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e1.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
 }
 

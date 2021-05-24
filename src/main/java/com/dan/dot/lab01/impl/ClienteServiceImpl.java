@@ -24,7 +24,7 @@ public class ClienteServiceImpl implements ClienteService {
     private final List<Cliente> listaClientes = new ArrayList<>();
     private Integer ID_GEN = 1;
 
-    public ClienteServiceImpl(RiesgoCrediticioService rs, ClienteRest clienteRest) {
+    public ClienteServiceImpl(RiesgoCrediticioService rs) {
         this.riesgoService = rs;
     }
 
@@ -62,16 +62,49 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     private boolean validarDatosCliente(Cliente c) {
-        return c.getObras() != null && c.getUser() != null && c.getPassword() != null;
+        boolean obrasValido = false;
+
+        if (c.getObras() != null) {
+            for (int i = 0; i < c.getObras().size(); i++) {
+                obrasValido = c.getObras().get(i).getTipo() != null;
+            }
+        }
+
+        return obrasValido && c.getUser() != null && c.getUser().getPassword() != null;
     }
 
     @Override
-    public Cliente bajaCliente(Cliente c) throws RecursoNoEncontradoException, OperacionNoPermitidaException {
-        c.setFechaBaja(Calendar.getInstance().getTime());
+    public Cliente bajaCliente(Integer id) throws RecursoNoEncontradoException, OperacionNoPermitidaException {
+
+        OptionalInt indexOpt = IntStream.range(0, listaClientes.size())
+                .filter(i -> listaClientes.get(i).getId().equals(id))
+                .findFirst();
+        if (indexOpt.isPresent()) {
+            listaClientes.get(indexOpt.getAsInt()).setFechaBaja(Calendar.getInstance().getTime());
+        } else {
+            throw new RecursoNoEncontradoException("Cliente", id);
+        }
+
         /*if(c.getPedidos() != null && !c.getPedidos().isEmpty()) {
             c.setFechaBaja(Calendar.getInstance().getTime());
         }*/
-        return c;
+
+        return listaClientes.get(indexOpt.getAsInt());
+    }
+
+
+    @Override
+    public Cliente altaCliente(Integer id) throws RecursoNoEncontradoException {
+        OptionalInt indexOpt = IntStream.range(0, listaClientes.size())
+                .filter(i -> listaClientes.get(i).getId().equals(id))
+                .findFirst();
+        if (indexOpt.isPresent()) {
+            listaClientes.get(indexOpt.getAsInt()).setFechaBaja(null);
+        } else {
+            throw new RecursoNoEncontradoException("Cliente", id);
+        }
+
+        return listaClientes.get(indexOpt.getAsInt());
     }
 
     @Override
@@ -120,4 +153,5 @@ public class ClienteServiceImpl implements ClienteService {
 
         return c;
     }
+
 }
