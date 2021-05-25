@@ -11,5 +11,4 @@ public class RiesgoCrediticioServiceImpl implements RiesgoCrediticioService {
         return true;
     }
 
-
 }

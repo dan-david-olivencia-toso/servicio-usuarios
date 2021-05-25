@@ -27,12 +27,8 @@ import java.util.stream.IntStream;
 @Api(value = "ClienteRest", description = "Permite gestionar los clientes de la empresa")
 public class ClienteRest {
 
-
     @Autowired
     ClienteService clienteService;
-
-    @Autowired
-    RiesgoCrediticioService riesgoCrediticioService;
 
     @GetMapping(path = "/{id}")
     @ApiOperation(value = "Busca un cliente por id")
@@ -131,6 +127,5 @@ public class ClienteRest {
         }
         return ResponseEntity.ok().build();
     }
-
 }
 

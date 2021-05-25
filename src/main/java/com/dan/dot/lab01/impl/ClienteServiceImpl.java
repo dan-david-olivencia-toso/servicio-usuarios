@@ -5,6 +5,7 @@ import com.dan.dot.lab01.repository.ClienteRepository;
 import com.dan.dot.lab01.rest.ClienteRest;
 import com.dan.dot.lab01.service.ClienteService;
 import com.dan.dot.lab01.service.RiesgoCrediticioService;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,12 @@ import java.util.stream.IntStream;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
-    @Autowired
+    @Autowired //Servicio del que depende
+    private final RiesgoCrediticioService riesgoService;
+
+    @Autowired //Configuration necesaria para guardar en memoria
     ClienteRepository clienteRepo;
 
-    private final RiesgoCrediticioService riesgoService;
     private final List<Cliente> listaClientes = new ArrayList<>();
     private Integer ID_GEN = 1;
 
@@ -31,32 +34,14 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Cliente guardarCliente(Cliente c) throws RiesgoException, RecursoNoEncontradoException {
 
-        if (!(c.getId() != null && c.getId() > 0)) { //Si no existe el usuario
-            if (validarDatosCliente(c)) { //Si tiene obras e información de usuario y contraseña
-                if (!riesgoService.reporteBCRAPositivo(c.getCuit())) {
-                    throw new RiesgoException("BCRA");
-                }
-                c.setId(ID_GEN++);
-                listaClientes.add(c);
-            } else {
-                throw new RecursoNoEncontradoException("Falta información obligatoria de usuario");
+        if (validarDatosCliente(c)) { //Si tiene obras, información de usuario y contraseña
+            if (!riesgoService.reporteBCRAPositivo(c.getCuit())) {
+                throw new RiesgoException("Riesgo Excepcion: BCRA");
             }
-        } else { //Si el usuario ya existe, se actualiza
-            if (validarDatosCliente(c)) { //Si tiene obras e información de usuario y contraseña
-                OptionalInt indexOpt = IntStream.range(0, listaClientes.size())
-                        .filter(i -> listaClientes.get(i).getId().equals(c.getId()))
-                        .findFirst();
-                if (indexOpt.isPresent()) {
-                    listaClientes.set(indexOpt.getAsInt(), c);
-                } else {
-                    throw new RecursoNoEncontradoException("Cliente", c.getId());
-                }
-            } else {
-                throw new RecursoNoEncontradoException("Falta información obligatoria de usuario");
-            }
+            clienteRepo.save(c);
+        } else {
+            throw new RecursoNoEncontradoException("Falta información obligatoria de usuario");
         }
-
-        this.clienteRepo.save(c);
 
         return c;
     }
@@ -76,82 +61,82 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Cliente bajaCliente(Integer id) throws RecursoNoEncontradoException, OperacionNoPermitidaException {
 
-        OptionalInt indexOpt = IntStream.range(0, listaClientes.size())
-                .filter(i -> listaClientes.get(i).getId().equals(id))
-                .findFirst();
-        if (indexOpt.isPresent()) {
-            listaClientes.get(indexOpt.getAsInt()).setFechaBaja(Calendar.getInstance().getTime());
+        Cliente c = null;
+
+        if (clienteRepo.existsById(id)) {
+            if (validarBajaCliente(id)) { //Si tiene pedidos pendientes
+                c = clienteRepo.findById(id).get();
+                c.setFechaBaja(Calendar.getInstance().getTime());
+                clienteRepo.save(c);
+            } else {
+                throw new OperacionNoPermitidaException("No se puede eliminar, el cliente tiene pedidos pendientes");
+            }
         } else {
             throw new RecursoNoEncontradoException("Cliente", id);
         }
 
-        /*if(c.getPedidos() != null && !c.getPedidos().isEmpty()) {
-            c.setFechaBaja(Calendar.getInstance().getTime());
-        }*/
-
-        return listaClientes.get(indexOpt.getAsInt());
+        return c;
     }
 
+    private boolean validarBajaCliente(Integer id) {
+        return true;
+    }
 
     @Override
     public Cliente altaCliente(Integer id) throws RecursoNoEncontradoException {
-        OptionalInt indexOpt = IntStream.range(0, listaClientes.size())
-                .filter(i -> listaClientes.get(i).getId().equals(id))
-                .findFirst();
-        if (indexOpt.isPresent()) {
-            listaClientes.get(indexOpt.getAsInt()).setFechaBaja(null);
-        } else {
-            throw new RecursoNoEncontradoException("Cliente", id);
-        }
 
-        return listaClientes.get(indexOpt.getAsInt());
+        if (!clienteRepo.existsById(id))
+            throw new RecursoNoEncontradoException("Cliente no encontrado con ID:", id);
+
+        //Usando Repository
+        Cliente c = clienteRepo.findById(id).get();
+        clienteRepo.save(c);
+
+        return c;
     }
 
     @Override
     public List<Cliente> listarClientes() {
-        return listaClientes;
+        return Lists.newArrayList(clienteRepo.findAll().iterator());
     }
 
     @Override
     public Optional<Cliente> buscarClientePorId(Integer id) throws RecursoNoEncontradoException {
-        /*Optional<Cliente> c = listaClientes
-                .stream()
-                .filter(unCli -> unCli.getId().equals(id) && unCli.getFechaBaja() == null)
-                .findFirst();
 
-        if (c.isEmpty())
-            throw new RecursoNoEncontradoException("Cliente", id);
-
-        return c;
-         */
+        if (!clienteRepo.existsById(id))
+            throw new RecursoNoEncontradoException("Cliente no encontrado con ID:", id);
 
         return this.clienteRepo.findById(id);
     }
 
     @Override
     public Optional<Cliente> clientePorCuit(String cuit) throws RecursoNoEncontradoException {
-        Optional<Cliente> c = listaClientes
+        List<Cliente> listaClientesCuit = Lists.newArrayList(clienteRepo.findAll().iterator());
+
+        Optional<Cliente> c = listaClientesCuit
                 .stream()
                 .filter(unCli -> unCli.getCuit().equals(cuit) && unCli.getFechaBaja() == null)
                 .findFirst();
 
         if (c.isEmpty())
-            throw new RecursoNoEncontradoException("Cliente", Integer.parseInt(cuit));
+            throw new RecursoNoEncontradoException("Cliente no encontrado con CUIT:", cuit);
 
         return c;
     }
 
     @Override
     public Optional<Cliente> clientePorRazonSocial(String razonSocial) throws RecursoNoEncontradoException {
-        Optional<Cliente> c = listaClientes
+
+        List<Cliente> listaClientesRazon = Lists.newArrayList(clienteRepo.findAll().iterator());
+
+        Optional<Cliente> c = listaClientesRazon
                 .stream()
                 .filter(unCli -> unCli.getRazonSocial().equals(razonSocial) && unCli.getFechaBaja() == null)
                 .findFirst();
 
         if (c.isEmpty())
-            throw new RecursoNoEncontradoException("Cliente", razonSocial);
+            throw new RecursoNoEncontradoException("Cliente no encontrado con Razon Social:", razonSocial);
 
         return c;
     }
-
 }

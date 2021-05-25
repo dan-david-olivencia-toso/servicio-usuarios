@@ -19,8 +19,8 @@ public interface ClienteService {
     public Cliente altaCliente(Integer id) throws RecursoNoEncontradoException;
 
     class OperacionNoPermitidaException extends Exception {
-        public OperacionNoPermitidaException(String errorMessage, Throwable err) {
-            super(errorMessage, err);
+        public OperacionNoPermitidaException(String errorMessage) {
+            super(errorMessage);
         }
     }
 
