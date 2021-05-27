@@ -1,9 +1,5 @@
 package com.dan.dot.lab01.domain;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -98,4 +94,14 @@ public class Cliente {
     private Date fechaBaja;
     private List<Obra> obras;
     private List<Pedido> pedidos;
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", razonSocial='" + razonSocial + '\'' +
+                ", cuit='" + cuit + '\'' +
+                ", mail='" + mail + '\'' +
+                '}';
+    }
 }

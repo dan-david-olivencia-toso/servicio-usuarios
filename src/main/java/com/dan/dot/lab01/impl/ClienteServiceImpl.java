@@ -7,6 +7,7 @@ import com.dan.dot.lab01.service.ClienteService;
 import com.dan.dot.lab01.service.RiesgoCrediticioService;
 import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.dan.dot.lab01.rest.ClienteRest.*;
@@ -24,8 +25,8 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired //Configuration necesaria para guardar en memoria
     ClienteRepository clienteRepo;
 
-    private final List<Cliente> listaClientes = new ArrayList<>();
-    private Integer ID_GEN = 1;
+//    private final List<Cliente> listaClientes = new ArrayList<>();
+//    private Integer ID_GEN = 1;
 
     public ClienteServiceImpl(RiesgoCrediticioService rs) {
         this.riesgoService = rs;
@@ -34,16 +35,20 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Cliente guardarCliente(Cliente c) throws RiesgoException, RecursoNoEncontradoException {
 
+        Cliente clienteGuardado;
         if (validarDatosCliente(c)) { //Si tiene obras, información de usuario y contraseña
             if (!riesgoService.reporteBCRAPositivo(c.getCuit())) {
                 throw new RiesgoException("Riesgo Excepcion: BCRA");
             }
-            clienteRepo.save(c);
+//            c.setId(ID_GEN);//SACAR DESPUES DE IMPLEMENTAR BDD
+//            ID_GEN++;//SACAR DESPUES DE IMPLEMENTAR BDD
+
+            clienteGuardado = clienteRepo.save(c);
         } else {
             throw new RecursoNoEncontradoException("Falta información obligatoria de usuario");
         }
 
-        return c;
+        return clienteGuardado;
     }
 
     private boolean validarDatosCliente(Cliente c) {
@@ -61,7 +66,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Cliente bajaCliente(Integer id) throws RecursoNoEncontradoException, OperacionNoPermitidaException {
 
-        Cliente c = null;
+        Cliente c;
 
         if (clienteRepo.existsById(id)) {
             if (validarBajaCliente(id)) { //Si tiene pedidos pendientes
@@ -88,7 +93,6 @@ public class ClienteServiceImpl implements ClienteService {
         if (!clienteRepo.existsById(id))
             throw new RecursoNoEncontradoException("Cliente no encontrado con ID:", id);
 
-        //Usando Repository
         Cliente c = clienteRepo.findById(id).get();
         clienteRepo.save(c);
 
@@ -97,7 +101,14 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public List<Cliente> listarClientes() {
-        return Lists.newArrayList(clienteRepo.findAll().iterator());
+        List<Cliente> lc= Lists.newArrayList(clienteRepo.findAll().iterator());
+
+        List<Cliente> lca = lc //Filtro lista de clientes activos
+                .stream()
+                .filter(unCli -> unCli.getFechaBaja() == null)
+                .collect(Collectors.toList());
+
+        return lca;
     }
 
     @Override

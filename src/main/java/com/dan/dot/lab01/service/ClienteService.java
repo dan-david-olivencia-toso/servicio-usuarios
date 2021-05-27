@@ -13,7 +13,7 @@ public interface ClienteService {
     public Cliente guardarCliente(Cliente c) throws RecursoNoEncontradoException, RiesgoException;
     public Cliente bajaCliente(Integer id) throws RecursoNoEncontradoException, OperacionNoPermitidaException;
     public List<Cliente> listarClientes();
-    public Optional<Cliente> buscarClientePorId(Integer id) throws RecursoNoEncontradoException, RecursoNoEncontradoException;
+    public Optional<Cliente> buscarClientePorId(Integer id) throws RecursoNoEncontradoException;
     public Optional<Cliente> clientePorCuit(String cuit) throws RecursoNoEncontradoException;
     public Optional<Cliente> clientePorRazonSocial(String razonSocial) throws RecursoNoEncontradoException;
     public Cliente altaCliente(Integer id) throws RecursoNoEncontradoException;
@@ -42,6 +42,4 @@ public interface ClienteService {
             super(cliente+razonSocial);
         }
     }
-
-
 }
