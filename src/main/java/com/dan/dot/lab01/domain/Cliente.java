@@ -1,5 +1,6 @@
 package com.dan.dot.lab01.domain;
 
+import java.util.Date;
 import java.util.List;
 
 public class Cliente {
@@ -67,6 +68,22 @@ public class Cliente {
         this.obras = obras;
     }
 
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public Date getFechaBaja() {
+        return fechaBaja;
+    }
+
+    public void setFechaBaja(Date fechaBaja) {
+        this.fechaBaja = fechaBaja;
+    }
+
     private Integer id;
     private String razonSocial;
     private String cuit;
@@ -74,5 +91,17 @@ public class Cliente {
     private Double maxCuentaCorriente;
     private Boolean habilitadoOnline;
     private Usuario user;
+    private Date fechaBaja;
     private List<Obra> obras;
+    private List<Pedido> pedidos;
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", razonSocial='" + razonSocial + '\'' +
+                ", cuit='" + cuit + '\'' +
+                ", mail='" + mail + '\'' +
+                '}';
+    }
 }
