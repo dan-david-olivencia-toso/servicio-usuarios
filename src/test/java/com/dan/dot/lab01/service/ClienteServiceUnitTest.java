@@ -2,7 +2,6 @@ package com.dan.dot.lab01.service;
 
 import com.dan.dot.lab01.domain.*;
 import com.dan.dot.lab01.repository.ClienteRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -64,7 +62,7 @@ public class ClienteServiceUnitTest {
         assertEquals(clienteResultado.getCuit(),(unCliente.getCuit()));
         assertEquals(clienteResultado.getMail(),(unCliente.getMail()));
         assertEquals(clienteResultado.getUser().getPassword(),(unCliente.getUser().getPassword()));
-        assertEquals(clienteResultado.getUser().getUser(),(unCliente.getUser().getUser()));
+        assertEquals(clienteResultado.getUser().getUsuario(),(unCliente.getUser().getUsuario()));
         assertEquals(clienteResultado.getUser().getTipo(),(unCliente.getUser().getTipo()));
         assertNotNull(clienteResultado.getObras());
         assertNull(clienteResultado.getFechaBaja());
@@ -146,7 +144,7 @@ public class ClienteServiceUnitTest {
         assertEquals("20410436524", clienteResultado.getCuit());
         verify(clienteRepo,times(1)).save(unCliente);
 
-        assertEquals(Optional.of(clienteResultado), clienteService.clientePorCuit(clienteResultado.getCuit()));
+        assertEquals(Optional.of(clienteResultado), clienteService.buscarClientePorCuit(clienteResultado.getCuit()));
     }
 
     public void crearClienteConInfoObligatoria() {
@@ -157,11 +155,11 @@ public class ClienteServiceUnitTest {
 
         Obra obra = new Obra();
         TipoObra tipoObra = new TipoObra();
-        tipoObra.setDescripcion("Casa");
+        tipoObra.setTipo("Casa");
         obra.setTipo(tipoObra);
 
         Usuario usuario = new Usuario();
-        usuario.setUser("fdavid");
+        usuario.setUsuario("fdavid");
         usuario.setPassword("123456");
         TipoUsuario tipoUsuario = new TipoUsuario();
         tipoUsuario.setTipo("CLIENTE");
@@ -180,11 +178,11 @@ public class ClienteServiceUnitTest {
 
         Obra obra = new Obra();
         TipoObra tipoObra = new TipoObra();
-        tipoObra.setDescripcion("Casa");
+        tipoObra.setTipo("Casa");
         obra.setTipo(tipoObra);
 
         Usuario usuario = new Usuario();
-        usuario.setUser("fdavid");
+        usuario.setUsuario("fdavid");
         usuario.setPassword("123456");
         TipoUsuario tipoUsuario = new TipoUsuario();
         tipoUsuario.setTipo("CLIENTE");
@@ -206,7 +204,7 @@ public class ClienteServiceUnitTest {
 
         Obra obra = new Obra();
         TipoObra tipoObra = new TipoObra();
-        tipoObra.setDescripcion("Casa");
+        tipoObra.setTipo("Casa");
         obra.setTipo(tipoObra);
 
         unCliente.setObras(new ArrayList<>());
@@ -220,7 +218,7 @@ public class ClienteServiceUnitTest {
         unCliente.setMail("faus@mail.com");
 
         Usuario usuario = new Usuario();
-        usuario.setUser("fdavid");
+        usuario.setUsuario("fdavid");
         usuario.setPassword("123456");
         TipoUsuario tipoUsuario = new TipoUsuario();
         tipoUsuario.setTipo("CLIENTE");

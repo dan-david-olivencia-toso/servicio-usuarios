@@ -5,7 +5,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +40,7 @@ public class EmpleadoRest {
 
         List<Empleado> listaE =  listaEmpleados
                 .stream()
-                .filter(unEmp -> unEmp.getUser().getUser().equals(user))
+                .filter(unEmp -> unEmp.getUser().getUsuario().equals(user))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(listaE);

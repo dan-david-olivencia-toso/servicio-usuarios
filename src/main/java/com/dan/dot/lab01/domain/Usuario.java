@@ -1,5 +1,9 @@
 package com.dan.dot.lab01.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "usuario")
 public class Usuario {
     public Integer getId() {
         return id;
@@ -9,12 +13,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsuario(String user) {
+        this.usuario = user;
     }
 
     public String getPassword() {
@@ -33,8 +37,12 @@ public class Usuario {
         this.tipo = tipo;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String user;
+    private String usuario;
     private String password;
+    @JoinColumn(name="id_tipo_usuario", referencedColumnName = "id")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private TipoUsuario tipo;
 }
