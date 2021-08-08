@@ -2,19 +2,14 @@ package com.dan.dot.lab01.impl;
 
 import com.dan.dot.lab01.domain.Cliente;
 import com.dan.dot.lab01.repository.ClienteRepository;
-import com.dan.dot.lab01.rest.ClienteRest;
 import com.dan.dot.lab01.service.ClienteService;
 import com.dan.dot.lab01.service.RiesgoCrediticioService;
-import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.dan.dot.lab01.rest.ClienteRest.*;
-
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -22,11 +17,8 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired //Servicio del que depende
     private final RiesgoCrediticioService riesgoService;
 
-    @Autowired //Configuration necesaria para guardar en memoria
+    @Autowired //Configuration necesaria para persistir
     ClienteRepository clienteRepo;
-
-//    private final List<Cliente> listaClientes = new ArrayList<>();
-//    private Integer ID_GEN = 1;
 
     public ClienteServiceImpl(RiesgoCrediticioService rs) {
         this.riesgoService = rs;
@@ -40,8 +32,6 @@ public class ClienteServiceImpl implements ClienteService {
             if (!riesgoService.reporteBCRAPositivo(c.getCuit())) {
                 throw new RiesgoException("Riesgo Excepcion: BCRA");
             }
-//            c.setId(ID_GEN);//SACAR DESPUES DE IMPLEMENTAR BDD
-//            ID_GEN++;//SACAR DESPUES DE IMPLEMENTAR BDD
 
             clienteGuardado = clienteRepo.save(c);
         } else {
@@ -70,19 +60,20 @@ public class ClienteServiceImpl implements ClienteService {
 
         if (clienteRepo.existsById(id)) {
             if (validarBajaCliente(id)) { //Si tiene pedidos pendientes
-                c = clienteRepo.findById(id).get();
+                c = clienteRepo.findClienteById(id).get();
                 c.setFechaBaja(Calendar.getInstance().getTime());
                 clienteRepo.save(c);
             } else {
                 throw new OperacionNoPermitidaException("No se puede eliminar, el cliente tiene pedidos pendientes");
             }
         } else {
-            throw new RecursoNoEncontradoException("Cliente", id);
+            throw new RecursoNoEncontradoException("Cliente con id no encontrado: ", id);
         }
 
         return c;
     }
 
+    // TODO: Implementar este método
     private boolean validarBajaCliente(Integer id) {
         return true;
     }
@@ -93,7 +84,7 @@ public class ClienteServiceImpl implements ClienteService {
         if (!clienteRepo.existsById(id))
             throw new RecursoNoEncontradoException("Cliente no encontrado con ID:", id);
 
-        Cliente c = clienteRepo.findById(id).get();
+        Cliente c = clienteRepo.findClienteById(id).get();
         clienteRepo.save(c);
 
         return c;
@@ -101,53 +92,30 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public List<Cliente> listarClientes() {
-        List<Cliente> lc= Lists.newArrayList(clienteRepo.findAll().iterator());
-
-        List<Cliente> lca = lc //Filtro lista de clientes activos
-                .stream()
-                .filter(unCli -> unCli.getFechaBaja() == null)
-                .collect(Collectors.toList());
-
-        return lca;
+        return clienteRepo.findAll();
     }
 
     @Override
     public Optional<Cliente> buscarClientePorId(Integer id) throws RecursoNoEncontradoException {
-
         if (!clienteRepo.existsById(id))
-            throw new RecursoNoEncontradoException("Cliente no encontrado con ID:", id);
+            throw new RecursoNoEncontradoException("Cliente no encontrado con ID: ", id);
 
-        return this.clienteRepo.findById(id);
+        return this.clienteRepo.findClienteById(id);
     }
 
     @Override
-    public Optional<Cliente> clientePorCuit(String cuit) throws RecursoNoEncontradoException {
-        List<Cliente> listaClientesCuit = Lists.newArrayList(clienteRepo.findAll().iterator());
+    public Optional<Cliente> buscarClientePorCuit(String cuit) throws RecursoNoEncontradoException {
+        if (!clienteRepo.existsByCuit(cuit))
+            throw new RecursoNoEncontradoException("Cliente no encontrado con CUIT: ", cuit);
 
-        Optional<Cliente> c = listaClientesCuit
-                .stream()
-                .filter(unCli -> unCli.getCuit().equals(cuit) && unCli.getFechaBaja() == null)
-                .findFirst();
-
-        if (c.isEmpty())
-            throw new RecursoNoEncontradoException("Cliente no encontrado con CUIT:", cuit);
-
-        return c;
+        return this.clienteRepo.findClienteByCuit(cuit);
     }
 
     @Override
     public Optional<Cliente> clientePorRazonSocial(String razonSocial) throws RecursoNoEncontradoException {
-
-        List<Cliente> listaClientesRazon = Lists.newArrayList(clienteRepo.findAll().iterator());
-
-        Optional<Cliente> c = listaClientesRazon
-                .stream()
-                .filter(unCli -> unCli.getRazonSocial().equals(razonSocial) && unCli.getFechaBaja() == null)
-                .findFirst();
-
-        if (c.isEmpty())
+        if (!clienteRepo.existsByCuit(razonSocial))
             throw new RecursoNoEncontradoException("Cliente no encontrado con Razon Social:", razonSocial);
 
-        return c;
+        return this.clienteRepo.findClienteByRazonSocial(razonSocial);
     }
 }

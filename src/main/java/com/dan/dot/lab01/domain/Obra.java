@@ -1,5 +1,9 @@
 package com.dan.dot.lab01.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "obra")
 public class Obra {
 
     public Integer getId() {
@@ -66,12 +70,18 @@ public class Obra {
         this.cliente = cliente;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String descripcion;
     private Float latitud;
     private Float longitud;
     private String direccion;
     private Integer superficie;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_tipo_obra", referencedColumnName = "id")
     private TipoObra tipo;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private Cliente cliente;
 }

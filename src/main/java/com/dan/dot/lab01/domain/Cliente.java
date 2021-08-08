@@ -1,8 +1,12 @@
 package com.dan.dot.lab01.domain;
 
+import org.springframework.beans.factory.annotation.Value;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
+@Entity
+@Table(name = "cliente")
 public class Cliente {
     public Integer getId() {
         return id;
@@ -68,14 +72,6 @@ public class Cliente {
         this.obras = obras;
     }
 
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
     public Date getFechaBaja() {
         return fechaBaja;
     }
@@ -84,16 +80,25 @@ public class Cliente {
         this.fechaBaja = fechaBaja;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "razon_social")
     private String razonSocial;
     private String cuit;
     private String mail;
+    @Column(name = "max_cuenta_corriente")
     private Double maxCuentaCorriente;
+    @Column(name = "habilitado_online")
     private Boolean habilitadoOnline;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private Usuario user;
+    @Column(name = "fecha_baja")
     private Date fechaBaja;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Obra> obras;
-    private List<Pedido> pedidos;
 
     @Override
     public String toString() {

@@ -1,5 +1,11 @@
 package com.dan.dot.lab01.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tipo_usuario")
 public class TipoUsuario {
     public Integer getId() {
         return id;
@@ -17,6 +23,7 @@ public class TipoUsuario {
         this.tipo = tipo;
     }
 
+    @Id
     private Integer id;
     private String tipo;
 }

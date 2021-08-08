@@ -1,5 +1,9 @@
 package com.dan.dot.lab01.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "empleado")
 public class Empleado {
     public Integer getId() {
         return id;
@@ -17,15 +21,25 @@ public class Empleado {
         this.mail = mail;
     }
 
-    public Usuario getUser() {
-        return user;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUser(Usuario user) {
-        this.user = user;
+    public void setUsuario(Usuario user) {
+        this.usuario = user;
     }
 
+    public Boolean getHabilitado() { return habilitado; }
+
+    public void setHabilitado(Boolean enabled) { this.habilitado = enabled; }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String mail;
-    private Usuario user;
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Usuario usuario;
+
+    private Boolean habilitado = true;
 }

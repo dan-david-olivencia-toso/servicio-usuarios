@@ -2,7 +2,6 @@ package com.dan.dot.lab01.rest;
 
 import com.dan.dot.lab01.domain.Cliente;
 import com.dan.dot.lab01.service.ClienteService;
-import com.dan.dot.lab01.service.RiesgoCrediticioService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -10,17 +9,10 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/api/cliente")
@@ -47,7 +39,7 @@ public class ClienteRest {
     public ResponseEntity<?> clientePorCuit(@PathVariable String cuit) {
         Optional<Cliente> c = null;
         try {
-            c = this.clienteService.clientePorCuit(cuit);
+            c = this.clienteService.buscarClientePorCuit(cuit);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -80,13 +72,13 @@ public class ClienteRest {
     @PostMapping
     @ApiOperation(value = "Dar de alta un cliente")
     public ResponseEntity<?> crear(@RequestBody Cliente cliente) throws ClienteService.RiesgoException, ClienteService.RecursoNoEncontradoException {
-        Cliente creado = null;
+        Cliente clienteCreado = null;
         try {
-            creado = this.clienteService.guardarCliente(cliente);
+            clienteCreado = this.clienteService.guardarCliente(cliente);
         } catch (ClienteService.RecursoNoEncontradoException | ClienteService.RiesgoException e1) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e1.getMessage());
         }
-        return ResponseEntity.ok(creado);
+        return ResponseEntity.ok(clienteCreado);
     }
 
     @PutMapping(path = "/{id}")
@@ -99,6 +91,7 @@ public class ClienteRest {
     })
     public ResponseEntity<?> actualizar(@RequestBody Cliente nuevo) {
         Cliente actualizado = null;
+
         try {
             actualizado = this.clienteService.guardarCliente(nuevo);
         } catch (ClienteService.RecursoNoEncontradoException | ClienteService.RiesgoException e1) {
