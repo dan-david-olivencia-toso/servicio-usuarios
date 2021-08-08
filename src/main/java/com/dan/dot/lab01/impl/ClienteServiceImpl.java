@@ -4,12 +4,12 @@ import com.dan.dot.lab01.domain.Cliente;
 import com.dan.dot.lab01.repository.ClienteRepository;
 import com.dan.dot.lab01.service.ClienteService;
 import com.dan.dot.lab01.service.RiesgoCrediticioService;
-import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -67,7 +67,7 @@ public class ClienteServiceImpl implements ClienteService {
                 throw new OperacionNoPermitidaException("No se puede eliminar, el cliente tiene pedidos pendientes");
             }
         } else {
-            throw new RecursoNoEncontradoException("Cliente", id);
+            throw new RecursoNoEncontradoException("Cliente con id no encontrado: ", id);
         }
 
         return c;

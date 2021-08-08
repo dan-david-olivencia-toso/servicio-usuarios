@@ -72,13 +72,13 @@ public class ClienteRest {
     @PostMapping
     @ApiOperation(value = "Dar de alta un cliente")
     public ResponseEntity<?> crear(@RequestBody Cliente cliente) throws ClienteService.RiesgoException, ClienteService.RecursoNoEncontradoException {
-        Cliente creado = null;
+        Cliente clienteCreado = null;
         try {
-            creado = this.clienteService.guardarCliente(cliente);
+            clienteCreado = this.clienteService.guardarCliente(cliente);
         } catch (ClienteService.RecursoNoEncontradoException | ClienteService.RiesgoException e1) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e1.getMessage());
         }
-        return ResponseEntity.ok(creado);
+        return ResponseEntity.ok(clienteCreado);
     }
 
     @PutMapping(path = "/{id}")
@@ -91,6 +91,7 @@ public class ClienteRest {
     })
     public ResponseEntity<?> actualizar(@RequestBody Cliente nuevo) {
         Cliente actualizado = null;
+
         try {
             actualizado = this.clienteService.guardarCliente(nuevo);
         } catch (ClienteService.RecursoNoEncontradoException | ClienteService.RiesgoException e1) {

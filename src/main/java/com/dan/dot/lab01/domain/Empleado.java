@@ -21,19 +21,25 @@ public class Empleado {
         this.mail = mail;
     }
 
-    public Usuario getUser() {
-        return user;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUser(Usuario user) {
-        this.user = user;
+    public void setUsuario(Usuario user) {
+        this.usuario = user;
     }
+
+    public Boolean getHabilitado() { return habilitado; }
+
+    public void setHabilitado(Boolean enabled) { this.habilitado = enabled; }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String mail;
-    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
-    private Usuario user;
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Usuario usuario;
+
+    private Boolean habilitado = true;
 }
