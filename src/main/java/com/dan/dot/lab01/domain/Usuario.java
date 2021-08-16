@@ -43,6 +43,6 @@ public class Usuario {
     private String usuario;
     private String password;
     @JoinColumn(name="id_tipo_usuario", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     private TipoUsuario tipo;
 }

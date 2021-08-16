@@ -39,7 +39,7 @@ public class Empleado {
     private Integer id;
     private String mail;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @NotNull
     private Usuario usuario;
 
