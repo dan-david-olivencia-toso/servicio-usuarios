@@ -1,8 +1,7 @@
 package com.dan.dot.lab01.domain;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 @Entity
@@ -56,12 +55,12 @@ public class Cliente {
         this.habilitadoOnline = habilitadoOnline;
     }
 
-    public Usuario getUser() {
-        return user;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUser(Usuario user) {
-        this.user = user;
+    public void setUsuario(Usuario user) {
+        this.usuario = user;
     }
 
     public List<Obra> getObras() {
@@ -93,7 +92,8 @@ public class Cliente {
     private Boolean habilitadoOnline;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
-    private Usuario user;
+    @NotNull
+    private Usuario usuario;
     @Column(name = "fecha_baja")
     private Date fechaBaja;
 
