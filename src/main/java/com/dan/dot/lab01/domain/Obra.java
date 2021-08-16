@@ -70,6 +70,10 @@ public class Obra {
         this.cliente = cliente;
     }
 
+    public Boolean getHabilitado() { return habilitado; }
+
+    public void setHabilitado(Boolean habilitado) { this.habilitado = habilitado; }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -78,6 +82,7 @@ public class Obra {
     private Float longitud;
     private String direccion;
     private Integer superficie;
+    private Boolean habilitado;
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tipo_obra", referencedColumnName = "id")
     private TipoObra tipo;

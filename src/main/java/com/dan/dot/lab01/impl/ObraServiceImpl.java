@@ -6,7 +6,6 @@ import com.dan.dot.lab01.service.ObraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,33 +16,48 @@ public class ObraServiceImpl implements ObraService {
     ObraRepository obraRepository;
 
     @Override
-    public Obra guardarObra(Obra o){
+    public Obra guardarObra(Obra o) throws RecursoNoPersistidoException {
+        Obra obraGuardada;
+
+        try{
+            obraGuardada = obraRepository.save(o);
+        }
+        catch(Exception ex){
+            throw new RecursoNoPersistidoException("Falta información obligatoria de obra.");
+        }
+
+        return obraGuardada;
+    }
+
+    @Override
+    public Obra bajaObra(Integer id) throws RecursoNoEncontradoException {
+        Obra o;
+
+        if(obraRepository.existsById(id)){
+            o = obraRepository.findObraById(id).get();
+            o.setHabilitado(false);
+            obraRepository.save(o);
+        }
+        else{
+            throw new RecursoNoEncontradoException("Obra con id no encongrada: ", id);
+        }
+
         return o;
     }
 
     @Override
-    public Obra actualizarObra(Obra o){
-        return o;
+    public List<Obra> listarObras() {
+        return obraRepository.findAll();
     }
 
     @Override
-    public Obra bajaObra(Integer id){
-        return null;
-    }
-
-    @Override
-    public List<Obra> listarObras(){
-        return new ArrayList<Obra>();
-    }
-
-    @Override
-    public List<Obra> listarObrasPorIdCliente(Integer idCliente){
-        return new ArrayList<Obra>();
+    public List<Obra> listarObrasPorIdCliente(Integer idCliente) {
+        return obraRepository.findObrasByClienteId(idCliente);
     }
 
     @Override
     public Optional<Obra> buscarObraPorId(Integer id){
-        return null;
+        return obraRepository.findObraById(id);
     }
 
 }

@@ -13,12 +13,19 @@ import java.util.Optional;
 //Recomiendo leer acerca de esta notación (es un mundo completo jeje)
 @Transactional
 public interface ObraService {
-    public Obra guardarObra(Obra o);
-    public Obra actualizarObra(Obra o);
-    public Obra bajaObra(Integer id);
+    public Obra guardarObra(Obra o) throws RecursoNoPersistidoException;
+    public Obra bajaObra(Integer id) throws RecursoNoEncontradoException;
     public List<Obra> listarObras();
     public List<Obra> listarObrasPorIdCliente(Integer idCliente);
-    public Optional<Obra> buscarObraPorId(Integer id);
-//    public boolean clienteTieneObras(Integer idCliente); //TODO: Para Repository
+    public Optional<Obra> buscarObraPorId(Integer id) throws RecursoNoEncontradoException;
 
+    public static class RecursoNoEncontradoException extends Exception {
+        public RecursoNoEncontradoException(String errorMessage, Integer id) {
+            super(errorMessage+id);
+        }
+    }
+
+    public static class RecursoNoPersistidoException extends Exception {
+        public RecursoNoPersistidoException(String errorMessage) {super(errorMessage); }
+    }
 }
