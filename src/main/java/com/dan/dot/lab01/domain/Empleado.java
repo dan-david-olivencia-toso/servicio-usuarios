@@ -38,7 +38,7 @@ public class Empleado {
     private Integer id;
     private String mail;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Usuario usuario;
 
     private Boolean habilitado = true;

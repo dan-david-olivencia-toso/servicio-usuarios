@@ -23,7 +23,7 @@ public class ObraServiceImpl implements ObraService {
             obraGuardada = obraRepository.save(o);
         }
         catch(Exception ex){
-            throw new RecursoNoPersistidoException("Falta información obligatoria de obra.");
+            throw new RecursoNoPersistidoException("Falta información obligatoria de obra. Excepción: " + ex);
         }
 
         return obraGuardada;

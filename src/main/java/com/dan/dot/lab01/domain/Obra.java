@@ -1,5 +1,7 @@
 package com.dan.dot.lab01.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -83,10 +85,11 @@ public class Obra {
     private String direccion;
     private Integer superficie;
     private Boolean habilitado;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_tipo_obra", referencedColumnName = "id")
     private TipoObra tipo;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
+    @JsonIgnore
     private Cliente cliente;
 }
