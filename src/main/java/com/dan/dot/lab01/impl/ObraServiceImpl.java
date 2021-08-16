@@ -57,7 +57,7 @@ public class ObraServiceImpl implements ObraService {
 
     @Override
     public List<Obra> listarObrasPorIdTipo(Integer idTipo) {
-        return obraRepository.findObrasByTipoObraId(idTipo);
+        return obraRepository.findObrasByTipoId(idTipo);
     }
 
     @Override

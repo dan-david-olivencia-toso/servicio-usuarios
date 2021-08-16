@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ObraRepository extends JpaRepository<Obra, Integer> {
     Optional<Obra> findObraById(Integer id);
     List<Obra> findObrasByClienteId(Integer id);
-    List<Obra> findObrasByTipoObraId(Integer id);
+    List<Obra> findObrasByTipoId(Integer id);
     boolean existsById(Integer id);
     Obra save(Obra obra);
 }
