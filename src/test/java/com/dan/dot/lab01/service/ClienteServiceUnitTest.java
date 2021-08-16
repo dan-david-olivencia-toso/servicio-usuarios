@@ -61,9 +61,9 @@ public class ClienteServiceUnitTest {
         assertEquals(clienteResultado.getRazonSocial(), (unCliente.getRazonSocial()));
         assertEquals(clienteResultado.getCuit(),(unCliente.getCuit()));
         assertEquals(clienteResultado.getMail(),(unCliente.getMail()));
-        assertEquals(clienteResultado.getUser().getPassword(),(unCliente.getUser().getPassword()));
-        assertEquals(clienteResultado.getUser().getUsuario(),(unCliente.getUser().getUsuario()));
-        assertEquals(clienteResultado.getUser().getTipo(),(unCliente.getUser().getTipo()));
+        assertEquals(clienteResultado.getUsuario().getPassword(),(unCliente.getUsuario().getPassword()));
+        assertEquals(clienteResultado.getUsuario().getUsuario(),(unCliente.getUsuario().getUsuario()));
+        assertEquals(clienteResultado.getUsuario().getTipo(),(unCliente.getUsuario().getTipo()));
         assertNotNull(clienteResultado.getObras());
         assertNull(clienteResultado.getFechaBaja());
 
@@ -165,7 +165,7 @@ public class ClienteServiceUnitTest {
         tipoUsuario.setTipo("CLIENTE");
         usuario.setTipo(tipoUsuario);
 
-        unCliente.setUser(usuario);
+        unCliente.setUsuario(usuario);
         unCliente.setObras(new ArrayList<>());
         unCliente.getObras().add(obra);
     }
@@ -188,7 +188,7 @@ public class ClienteServiceUnitTest {
         tipoUsuario.setTipo("CLIENTE");
         usuario.setTipo(tipoUsuario);
 
-        unCliente.setUser(usuario);
+        unCliente.setUsuario(usuario);
         unCliente.setObras(new ArrayList<>());
         unCliente.getObras().add(obra);
         unCliente.setFechaBaja(Calendar.getInstance().getTime());
@@ -224,7 +224,7 @@ public class ClienteServiceUnitTest {
         tipoUsuario.setTipo("CLIENTE");
         usuario.setTipo(tipoUsuario);
 
-        unCliente.setUser(usuario);
+        unCliente.setUsuario(usuario);
     }
 
 }

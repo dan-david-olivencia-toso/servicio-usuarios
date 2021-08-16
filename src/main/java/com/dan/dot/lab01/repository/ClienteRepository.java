@@ -11,5 +11,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     Optional<Cliente> findClienteByCuit(String cuit);
     Optional<Cliente> findClienteByRazonSocial(String razonSocial);
     boolean existsByCuit(String cuit);
+    boolean existsByRazonSocial(String razonSocial);
     Cliente save(Cliente cliente);
 }

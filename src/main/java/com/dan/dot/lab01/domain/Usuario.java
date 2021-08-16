@@ -45,7 +45,4 @@ public class Usuario {
     @JoinColumn(name="id_tipo_usuario", referencedColumnName = "id")
     @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     private TipoUsuario tipo;
-
-    @OneToOne(mappedBy = "usuario")
-    private Empleado empleado;
 }
