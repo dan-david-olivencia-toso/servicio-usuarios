@@ -1,6 +1,7 @@
 package com.dan.dot.lab01.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "empleado")
@@ -38,7 +39,8 @@ public class Empleado {
     private Integer id;
     private String mail;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
     private Usuario usuario;
 
     private Boolean habilitado = true;

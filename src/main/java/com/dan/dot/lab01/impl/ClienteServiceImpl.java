@@ -30,7 +30,7 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente clienteGuardado;
         if (validarDatosCliente(c)) { //Si tiene obras, información de usuario y contraseña
             if (!riesgoService.reporteBCRAPositivo(c.getCuit())) {
-                throw new RiesgoException("Riesgo Excepcion: BCRA");
+                throw new RiesgoException("Riesgo Excepcion: BCRA"); //TODO: Documentar en informe que esto es un mock
             }
 
             clienteGuardado = clienteRepo.save(c);
@@ -42,15 +42,9 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     private boolean validarDatosCliente(Cliente c) {
-        boolean obrasValido = false;
+        boolean obrasValido = c.getObras() != null;
 
-        if (c.getObras() != null) {
-            for (int i = 0; i < c.getObras().size(); i++) {
-                obrasValido = c.getObras().get(i).getTipo() != null;
-            }
-        }
-
-        return obrasValido && c.getUser() != null && c.getUser().getPassword() != null;
+        return obrasValido && c.getUsuario() != null && c.getUsuario().getPassword() != null;
     }
 
     @Override
@@ -85,6 +79,7 @@ public class ClienteServiceImpl implements ClienteService {
             throw new RecursoNoEncontradoException("Cliente no encontrado con ID:", id);
 
         Cliente c = clienteRepo.findClienteById(id).get();
+        c.setFechaBaja(null);
         clienteRepo.save(c);
 
         return c;
@@ -113,7 +108,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Optional<Cliente> clientePorRazonSocial(String razonSocial) throws RecursoNoEncontradoException {
-        if (!clienteRepo.existsByCuit(razonSocial))
+        if (!clienteRepo.existsByRazonSocial(razonSocial))
             throw new RecursoNoEncontradoException("Cliente no encontrado con Razon Social:", razonSocial);
 
         return this.clienteRepo.findClienteByRazonSocial(razonSocial);

@@ -65,7 +65,7 @@ public class ClienteResourceIntegrationTest {
         tipoUsuario.setTipo("CLIENTE");
         usuario.setTipo(tipoUsuario);
 
-        unCliente.setUser(usuario);
+        unCliente.setUsuario(usuario);
         unCliente.setObras(new ArrayList<>());
         unCliente.getObras().add(obra);
     }
