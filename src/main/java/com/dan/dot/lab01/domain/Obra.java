@@ -90,6 +90,6 @@ public class Obra {
     private TipoObra tipo;
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonIgnore // RO 16-08-21 - Anotación para marcar que esta propiedad se debe ignorar al serializar
     private Cliente cliente;
 }
