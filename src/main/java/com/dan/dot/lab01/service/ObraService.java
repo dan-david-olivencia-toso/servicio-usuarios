@@ -17,6 +17,7 @@ public interface ObraService {
     public Obra bajaObra(Integer id) throws RecursoNoEncontradoException;
     public List<Obra> listarObras();
     public List<Obra> listarObrasPorIdCliente(Integer idCliente);
+    public List<Obra> listarObrasPorIdTipo(Integer idTipo);
     public Optional<Obra> buscarObraPorId(Integer id) throws RecursoNoEncontradoException;
 
     public static class RecursoNoEncontradoException extends Exception {

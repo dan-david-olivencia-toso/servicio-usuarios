@@ -66,7 +66,7 @@ public class EmpleadoRest {
     }
 
     @PostMapping
-    public ResponseEntity<?> crearEmpleado(@RequestBody Empleado empleado) throws EmpleadoService.RecursoNoEncontradoException {
+    public ResponseEntity<?> crearEmpleado(@RequestBody Empleado empleado) throws EmpleadoService.RecursoNoEncontradoException { //FIXME: Remover este throws
         Empleado empleadoCreado = null;
         try {
             empleadoCreado = empleadoService.guardarEmpleado(empleado);
