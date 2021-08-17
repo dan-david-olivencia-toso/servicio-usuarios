@@ -76,6 +76,19 @@ public class Obra {
 
     public void setHabilitado(Boolean habilitado) { this.habilitado = habilitado; }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Id: ").append(this.id).append("\n");
+        sb.append("Descripción: ").append(this.descripcion).append("\n");
+        sb.append("Latitud: ").append(this.latitud).append("\n");
+        sb.append("Longitud: ").append(this.longitud).append("\n");
+        sb.append("Dirección: ").append(this.direccion).append("\n");
+        sb.append("Superficie: ").append(this.superficie).append("\n");
+        sb.append(this.tipo.toString());
+        return sb.toString();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
