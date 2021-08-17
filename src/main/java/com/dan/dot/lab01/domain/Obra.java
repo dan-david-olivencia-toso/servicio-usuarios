@@ -1,5 +1,6 @@
 package com.dan.dot.lab01.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -103,6 +104,6 @@ public class Obra {
     private TipoObra tipo;
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
-    @JsonIgnore // RO 16-08-21 - Anotación para marcar que esta propiedad se debe ignorar al serializar
+    @JsonBackReference // RO 16-08-21 - Anotación para marcar que esta propiedad se debe ignorar al serializar, evitando referencias recursivas en loop
     private Cliente cliente;
 }
