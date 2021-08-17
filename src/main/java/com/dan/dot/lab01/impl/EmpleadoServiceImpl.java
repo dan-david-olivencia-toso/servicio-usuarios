@@ -21,7 +21,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             empleadoGuardado = empleadoRepository.save(e);
         }
         catch (Exception ex){
-            throw new RecursoNoEncontradoException("Falta información obligatoria de empleado.");
+            throw new RecursoNoEncontradoException("Falta información obligatoria de empleado: " + ex);
         }
         return empleadoGuardado;
     }
