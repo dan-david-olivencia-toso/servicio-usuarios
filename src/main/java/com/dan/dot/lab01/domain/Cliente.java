@@ -79,6 +79,28 @@ public class Cliente {
         this.fechaBaja = fechaBaja;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Id: ").append(this.id).append("\n");
+        sb.append("Razón Social: ").append(this.razonSocial).append("\n");
+        sb.append("CUIT: ").append(this.cuit).append("\n");
+        sb.append("Mail: ").append(this.mail).append("\n");
+        sb.append("Máx. Cuenta Corriente: ").append(this.maxCuentaCorriente).append("\n");
+
+        if(this.fechaBaja != null){
+            sb.append("Fecha Baja: ").append(this.fechaBaja).append("\n");
+        }
+        else{
+            sb.append("Cliente Habilitado").append("\n");
+        }
+
+        sb.append("-------------").append("\n");
+        sb.append(this.usuario.toString());
+
+        return sb.toString();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -100,13 +122,5 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Obra> obras;
 
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", razonSocial='" + razonSocial + '\'' +
-                ", cuit='" + cuit + '\'' +
-                ", mail='" + mail + '\'' +
-                '}';
-    }
+
 }

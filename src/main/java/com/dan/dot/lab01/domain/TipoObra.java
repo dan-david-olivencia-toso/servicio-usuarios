@@ -23,6 +23,16 @@ public class TipoObra {
         this.tipo = descripcion;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Id: ").append(this.id).append("\n");
+        sb.append("Tipo: ").append(this.tipo).append("\n");
+
+        return sb.toString();
+    }
+
     @Id
     private Integer id;
     private String tipo;

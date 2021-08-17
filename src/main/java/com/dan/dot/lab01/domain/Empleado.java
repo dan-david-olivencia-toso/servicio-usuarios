@@ -34,6 +34,24 @@ public class Empleado {
 
     public void setHabilitado(Boolean enabled) { this.habilitado = enabled; }
 
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Id: ").append(this.id).append("\n");
+        sb.append("Mail: ").append(this.mail).append("\n");
+
+        if(this.habilitado){
+            sb.append("Empleado Habilitado").append("\n");
+        }
+        else{
+            sb.append("Empleado Deshabilitado").append("\n");
+        }
+
+        sb.append("-------------").append("\n");
+        sb.append(this.usuario.toString());
+
+        return sb.toString();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
