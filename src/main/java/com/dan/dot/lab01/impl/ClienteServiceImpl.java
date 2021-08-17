@@ -28,14 +28,18 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente guardarCliente(Cliente c) throws RiesgoException, RecursoNoEncontradoException {
 
         Cliente clienteGuardado;
+
         if (validarDatosCliente(c)) { //Si tiene obras, información de usuario y contraseña
             if (!riesgoService.reporteBCRAPositivo(c.getCuit())) {
                 throw new RiesgoException("Riesgo Excepcion: BCRA"); //TODO: Documentar en informe que esto es un mock
             }
+        }
 
+        try{
             clienteGuardado = clienteRepo.save(c);
-        } else {
-            throw new RecursoNoEncontradoException("Falta información obligatoria de usuario");
+        }
+        catch(Exception ex){
+            throw new RecursoNoEncontradoException("Falta información obligatoria de usuario" + ex);
         }
 
         return clienteGuardado;
