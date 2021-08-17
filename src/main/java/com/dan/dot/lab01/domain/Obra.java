@@ -1,5 +1,7 @@
 package com.dan.dot.lab01.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -70,6 +72,10 @@ public class Obra {
         this.cliente = cliente;
     }
 
+    public Boolean getHabilitado() { return habilitado; }
+
+    public void setHabilitado(Boolean habilitado) { this.habilitado = habilitado; }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -91,10 +97,12 @@ public class Obra {
     private Float longitud;
     private String direccion;
     private Integer superficie;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    private Boolean habilitado;
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_tipo_obra", referencedColumnName = "id")
     private TipoObra tipo;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
+    @JsonIgnore // RO 16-08-21 - Anotación para marcar que esta propiedad se debe ignorar al serializar
     private Cliente cliente;
 }

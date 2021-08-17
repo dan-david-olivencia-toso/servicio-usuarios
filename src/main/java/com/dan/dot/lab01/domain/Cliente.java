@@ -119,7 +119,7 @@ public class Cliente {
     @Column(name = "fecha_baja")
     private Date fechaBaja;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente")
     private List<Obra> obras;
 
 
