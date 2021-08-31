@@ -1,6 +1,6 @@
-package com.dan.dot.lab01.repository;
+package com.dan.dot.usuarios.repository;
 
-import com.dan.dot.lab01.domain.Obra;
+import com.dan.dot.usuarios.domain.Obra;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

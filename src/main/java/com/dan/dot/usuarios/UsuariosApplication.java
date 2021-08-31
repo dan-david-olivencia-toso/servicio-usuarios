@@ -1,13 +1,13 @@
-package com.dan.dot.lab01;
+package com.dan.dot.usuarios;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Lab01Application {
+public class UsuariosApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Lab01Application.class, args);
+		SpringApplication.run(UsuariosApplication.class, args);
 	}
 
 }

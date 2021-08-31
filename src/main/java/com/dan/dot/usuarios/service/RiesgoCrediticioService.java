@@ -1,4 +1,4 @@
-package com.dan.dot.lab01.service;
+package com.dan.dot.usuarios.service;
 
 import org.springframework.context.annotation.Bean;
 

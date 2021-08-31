@@ -1,7 +1,7 @@
-package com.dan.dot.lab01.service;
+package com.dan.dot.usuarios.service;
 
-import com.dan.dot.lab01.domain.*;
-import com.dan.dot.lab01.repository.ClienteRepository;
+import com.dan.dot.usuarios.domain.*;
+import com.dan.dot.usuarios.repository.ClienteRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

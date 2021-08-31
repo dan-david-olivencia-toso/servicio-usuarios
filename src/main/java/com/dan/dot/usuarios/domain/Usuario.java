@@ -1,4 +1,4 @@
-package com.dan.dot.lab01.domain;
+package com.dan.dot.usuarios.domain;
 
 import javax.persistence.*;
 
