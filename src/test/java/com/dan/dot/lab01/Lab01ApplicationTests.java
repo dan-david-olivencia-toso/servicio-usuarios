@@ -1,10 +1,10 @@
-package com.dan.dot.lab01;
+package com.dan.dot.usuarios;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Lab01ApplicationTests {
+class UsuariosApplicationTests {
 
 	@Test
 	void contextLoads() {

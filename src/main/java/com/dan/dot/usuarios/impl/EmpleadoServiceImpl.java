@@ -1,8 +1,8 @@
-package com.dan.dot.lab01.impl;
+package com.dan.dot.usuarios.impl;
 
-import com.dan.dot.lab01.domain.Empleado;
-import com.dan.dot.lab01.repository.EmpleadoRepository;
-import com.dan.dot.lab01.service.EmpleadoService;
+import com.dan.dot.usuarios.domain.Empleado;
+import com.dan.dot.usuarios.repository.EmpleadoRepository;
+import com.dan.dot.usuarios.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

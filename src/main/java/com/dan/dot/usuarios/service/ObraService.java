@@ -1,6 +1,6 @@
-package com.dan.dot.lab01.service;
+package com.dan.dot.usuarios.service;
 
-import com.dan.dot.lab01.domain.Obra;
+import com.dan.dot.usuarios.domain.Obra;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

@@ -1,7 +1,7 @@
-package com.dan.dot.lab01.rest;
+package com.dan.dot.usuarios.rest;
 
-import com.dan.dot.lab01.domain.Cliente;
-import com.dan.dot.lab01.service.ClienteService;
+import com.dan.dot.usuarios.domain.Cliente;
+import com.dan.dot.usuarios.service.ClienteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

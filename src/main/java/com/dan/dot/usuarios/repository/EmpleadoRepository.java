@@ -1,6 +1,6 @@
-package com.dan.dot.lab01.repository;
+package com.dan.dot.usuarios.repository;
 
-import com.dan.dot.lab01.domain.Empleado;
+import com.dan.dot.usuarios.domain.Empleado;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
