@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api/obra")
 @Api(value = "ObraRest", description = "Permite gestionar los obras de la empresa")
