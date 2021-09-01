@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api/cliente")
 @Api(value = "ClienteRest", description = "Permite gestionar los clientes de la empresa")
