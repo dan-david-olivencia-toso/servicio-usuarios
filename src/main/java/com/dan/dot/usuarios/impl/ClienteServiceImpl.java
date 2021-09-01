@@ -1,9 +1,9 @@
-package com.dan.dot.lab01.impl;
+package com.dan.dot.usuarios.impl;
 
-import com.dan.dot.lab01.domain.Cliente;
-import com.dan.dot.lab01.repository.ClienteRepository;
-import com.dan.dot.lab01.service.ClienteService;
-import com.dan.dot.lab01.service.RiesgoCrediticioService;
+import com.dan.dot.usuarios.domain.Cliente;
+import com.dan.dot.usuarios.repository.ClienteRepository;
+import com.dan.dot.usuarios.service.ClienteService;
+import com.dan.dot.usuarios.service.RiesgoCrediticioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

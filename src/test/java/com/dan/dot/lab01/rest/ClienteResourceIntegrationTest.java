@@ -1,6 +1,6 @@
-package com.dan.dot.lab01.rest;
+package com.dan.dot.usuarios.rest;
 
-import com.dan.dot.lab01.domain.*;
+import com.dan.dot.usuarios.domain.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
