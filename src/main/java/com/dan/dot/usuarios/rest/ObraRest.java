@@ -23,6 +23,7 @@ public class ObraRest {
     @Autowired
     ObraService obraService;
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping(path = "/{id}")
     @ApiOperation(value = "Busca una obra por id")
     public ResponseEntity<?> obraPorId(@PathVariable Integer id) {
@@ -37,6 +38,7 @@ public class ObraRest {
         return ResponseEntity.ok(o);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping(path = "/cliente/{id}")
     @ApiOperation(value = "Busca las obras de un cliente")
     public ResponseEntity<?> obraPorClienteId(@PathVariable Integer id){
@@ -50,6 +52,7 @@ public class ObraRest {
         return ResponseEntity.ok(listaObras);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping(path = "/tipo/{id}")
     @ApiOperation(value = "Filtra las obras por tipo")
     public ResponseEntity<?> obraPorTipo(@PathVariable Integer id){
@@ -64,6 +67,7 @@ public class ObraRest {
         return ResponseEntity.ok(listaObras);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping
     public ResponseEntity<?> todos(){
         List<Obra> listaObras = new ArrayList<Obra>();
@@ -76,6 +80,7 @@ public class ObraRest {
         return ResponseEntity.ok(listaObras);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @PostMapping
     public ResponseEntity<?> crear(@RequestBody Obra nuevo) throws ObraService.RecursoNoPersistidoException {
         Obra obraCreada = null;
@@ -90,6 +95,7 @@ public class ObraRest {
         return ResponseEntity.ok(obraCreada);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @PutMapping(path = "/{id}")
     @ApiOperation(value = "Actualiza un obra")
     @ApiResponses(value = {
@@ -111,6 +117,7 @@ public class ObraRest {
         return ResponseEntity.ok(obraActualizada);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> baja(@PathVariable Integer id){
         try{
