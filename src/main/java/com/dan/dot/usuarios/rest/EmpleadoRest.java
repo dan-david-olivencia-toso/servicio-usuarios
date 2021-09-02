@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(maxAge = 86400)
 @RestController
 @RequestMapping("/api/empleado")
 @Api(value = "EmpleadoRest", description = "Permite gestionar los empleados de la empresa")
@@ -22,6 +22,7 @@ public class EmpleadoRest {
     @Autowired
     EmpleadoService empleadoService;
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping(path = "/{id}")
     @ApiOperation(value = "Busca un empleado por id")
     public ResponseEntity<?> empleadoPorId(@PathVariable Integer id) {
@@ -36,6 +37,7 @@ public class EmpleadoRest {
         return ResponseEntity.ok(e);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping(path = "/usuario/{usuario}")
     @ApiOperation(value = "Busca un empleado por nombre de usuario")
     public ResponseEntity<?> empleadoPorNombreUsuario(@PathVariable String usuario){
@@ -51,6 +53,7 @@ public class EmpleadoRest {
         return ResponseEntity.ok(e);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping
     public ResponseEntity<?> todos(){
         List<Empleado> empleados;
@@ -65,6 +68,7 @@ public class EmpleadoRest {
         return ResponseEntity.ok(empleados);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @PostMapping
     public ResponseEntity<?> crearEmpleado(@RequestBody Empleado empleado) throws EmpleadoService.RecursoNoEncontradoException { //FIXME: Remover este throws
         Empleado empleadoCreado = null;
@@ -78,6 +82,7 @@ public class EmpleadoRest {
         return ResponseEntity.ok(empleadoCreado);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @PutMapping(path = "/{id}")
     @ApiOperation(value = "Actualiza un empleado")
     @ApiResponses(value = {
@@ -99,6 +104,7 @@ public class EmpleadoRest {
         return ResponseEntity.ok(empleadoActualizado);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> borrar(@PathVariable Integer id){
         try{

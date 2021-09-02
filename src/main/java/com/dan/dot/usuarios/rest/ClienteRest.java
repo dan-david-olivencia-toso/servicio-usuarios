@@ -22,6 +22,7 @@ public class ClienteRest {
     @Autowired
     ClienteService clienteService;
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping(path = "/{id}")
     @ApiOperation(value = "Busca un cliente por id")
     public ResponseEntity<?> clientePorId(@PathVariable Integer id) {
@@ -33,7 +34,7 @@ public class ClienteRest {
         }
         return ResponseEntity.ok(c);
     }
-
+    @CrossOrigin(maxAge = 86400)
     @GetMapping(path = "/cuit/{cuit}")
     @ApiOperation(value = "Busca un cliente por CUIT")
     public ResponseEntity<?> clientePorCuit(@PathVariable String cuit) {
@@ -46,6 +47,7 @@ public class ClienteRest {
         return ResponseEntity.ok(c);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping(path = "/razonsocial/{razonSocial}")
     @ApiOperation(value = "Busca clientes por razon social")
     public ResponseEntity<?> clientePorRazonSocial(@PathVariable String razonSocial) {
@@ -58,6 +60,7 @@ public class ClienteRest {
         return ResponseEntity.ok(c);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @GetMapping
     public ResponseEntity<?> todos() {
         List<Cliente> clientes = null;
@@ -69,6 +72,7 @@ public class ClienteRest {
         return ResponseEntity.ok(clientes);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @PostMapping
     @ApiOperation(value = "Dar de alta un cliente")
     public ResponseEntity<?> crear(@RequestBody Cliente cliente) throws ClienteService.RiesgoException, ClienteService.RecursoNoEncontradoException {
@@ -81,6 +85,7 @@ public class ClienteRest {
         return ResponseEntity.ok(clienteCreado);
     }
 
+    @CrossOrigin(maxAge = 86400)
     @PutMapping(path = "/{id}")
     @ApiOperation(value = "Actualiza un cliente")
     @ApiResponses(value = {
@@ -101,6 +106,7 @@ public class ClienteRest {
 
     }
 
+    @CrossOrigin(maxAge = 86400)
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> borrar(@PathVariable Integer id){
         try {
@@ -111,6 +117,7 @@ public class ClienteRest {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin(maxAge = 86400)
     @PutMapping(path = "alta/{id}")
     public ResponseEntity<?> altaCliente(@PathVariable Integer id){
         try {
